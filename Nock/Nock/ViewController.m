@@ -36,7 +36,7 @@
 
 - (void) setupGameView {
     _skView = (SKView *)self.view;
-    _skView.showDebug = YES;
+    _skView.showsFPS = NO;
     _skView.showsNodeCount = NO;
 }
 
