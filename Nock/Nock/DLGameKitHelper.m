@@ -1,12 +1,6 @@
-//
-//  DLGameKitHelper.m
-//  Nock
-//
-//  Created by Jannie Theron on 2014/05/19.
-//  Copyright (c) 2014 pantsula. All rights reserved.
-//
 
 #import "DLGameKitHelper.h"
+#import "Nock-Swift.h"
 
 NSString *const PresentAuthenticationViewController = @"present_authentication_view_controller";
 NSString *const LeaderboardIPhone = @"iPhoneMax";

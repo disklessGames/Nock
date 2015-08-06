@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "DLMenuScene.h"
-#import "ViewController.h"
 #import <SpriteKit/SpriteKit.h>
 #import <GameKit/GameKit.h>
 #import "DLPlayerInfo.h"

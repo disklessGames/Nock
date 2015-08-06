@@ -1,10 +1,3 @@
-//
-//  DLMenuScene.m
-//  Nock
-//
-//  Created by Jannie Theron on 2014/05/14.
-//  Copyright (c) 2014 pantsula. All rights reserved.
-//
 
 #import "DLMenuScene.h"
 #import "DLGameScene.h"
@@ -18,6 +11,7 @@
 @property DLInfoNode *info;
 @property DLGameState *gameState;
 @property DLLeaderboard *leaderboard;
+
 @property SKEmitterNode *highlight;
 @property SKNode *selectedNode;
 @property SKAction *selectAction;
@@ -33,6 +27,7 @@
 
 -(instancetype)initWithSize:(CGSize)size{
     if (self = [super initWithSize:size]) {
+        self.backgroundColor = [UIColor redColor];
         _gameState = [DLGameState sharedGameState];//TODO Bad idea
         
         [self setupBackground];

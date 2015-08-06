@@ -27,15 +27,27 @@ class Puck: SKNode {
     
     var radius = 0
     var touched = false
-    let pullForce:Int
-    let flickForce:Int
+    var pullForce:Int
+    var flickForce:Int
+    var gameBoard:SKNode
+    var releasePoint = CGPoint()
     
-    init(radius: Int, pullForce:Int, flickForce:Int, trail: SKEmitterNode){
+    override init() {
+        self.trail = SKEmitterNode()
+        self.pullForce = 0
+        self.flickForce = 0
+        self.radius = 0
+        self.gameBoard = SKNode()
+        super.init()
+    }
+
+    convenience init(radius: Int, pullForce:Int, flickForce:Int, trail: SKEmitterNode, gameBoard: SKNode){
+        self.init()
         self.radius = radius
         self.pullForce = pullForce
         self.flickForce = flickForce
         self.trail = trail
-        super.init()
+        self.gameBoard = gameBoard
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -43,6 +55,7 @@ class Puck: SKNode {
         self.pullForce = 0
         self.flickForce = 0
         self.radius = 0
+        self.gameBoard = SKNode()
         super.init(coder: aDecoder)
     }
     
@@ -52,5 +65,11 @@ class Puck: SKNode {
         physicsBody?.allowsRotation = false
         physicsBody?.mass = 10
         physicsBody?.linearDamping = 1
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let touch = touches.first {
+            releasePoint = touch.locationInNode(gameBoard)
+        }
     }
 }

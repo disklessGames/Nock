@@ -10,11 +10,10 @@ class ViewController: UIViewController {
         //Setup gamekit
         
         let gameView = SKView()
-        view = gameView
         
-        let scene = SKScene(size: CGSize(width: view.frame.width, height: view.frame.height)) //DLMenuScene(size:gameView.bounds.size)
-        
+        let scene = DLMenuScene(size:view.bounds.size)
         scene.scaleMode = SKSceneScaleMode.Fill
+        view = gameView
         gameView.presentScene(scene)
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -24,6 +23,12 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        if view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.Compact {
+            return .Portrait
+        } else {
+            return .Landscape
+        }
+    }
 }
 
