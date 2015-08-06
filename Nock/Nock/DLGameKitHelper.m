@@ -103,8 +103,8 @@ NSString *const DLHideAds = @"disklessDisableAds";
             [scores enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
                 GKScore *s = (GKScore *)obj;
                 DLPlayerInfo *newFriend = [[DLPlayerInfo alloc ]init];
-                newFriend.id = s.playerID;
-                newFriend.totalScore= (NSInteger)s.value;
+                newFriend.id = s.player;
+                newFriend.totalScore = (NSInteger)s.value;
                 [friends setValue:newFriend forKey:newFriend.id];
             }];
             [DLGameState sharedGameState].friendScores = friends;

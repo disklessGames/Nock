@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  Nock
-//
-//  Created by Jannie Theron on 2015/08/03.
-//  Copyright (c) 2015 disklessgames. All rights reserved.
-//
 
 import UIKit
 
@@ -15,7 +8,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
         return true
     }
 

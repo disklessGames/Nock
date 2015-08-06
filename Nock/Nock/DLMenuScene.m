@@ -16,6 +16,8 @@
 @interface DLMenuScene()
 
 @property DLInfoNode *info;
+@property DLGameState *gameState;
+@property DLLeaderboard *leaderboard;
 @property SKEmitterNode *highlight;
 @property SKNode *selectedNode;
 @property SKAction *selectAction;
@@ -23,19 +25,18 @@
 @property SKLabelNode *themeButton;
 @property SKLabelNode *scoresButton;
 @property SKSpriteNode *backGround;
-@property DLGameState *gameState;
-@property DLLeaderboard *leaderboard;
 
 @end
+
 @implementation DLMenuScene{
 }
 
 -(instancetype)initWithSize:(CGSize)size{
     if (self = [super initWithSize:size]) {
-        _gameState = [DLGameState sharedGameState];
+        _gameState = [DLGameState sharedGameState];//TODO Bad idea
         
-        [self setupSelectionHighlight];
         [self setupBackground];
+        [self setupSelectionHighlight];
         [self setupTitleButton];
         [self setupTitleZoomLoop];
         [self setupScoresButton];
@@ -47,6 +48,9 @@
     return self;
 }
 
+-(void)update:(NSTimeInterval)currentTime {
+    NSLog(@"Update called at %f",currentTime);
+}
 
 - (void)setupSelectionHighlight {
     _highlight = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"menuHighlight" ofType:@"sks"]];
@@ -169,7 +173,7 @@
     DLGameKitHelper *gameKitHelper = [DLGameKitHelper sharedGameKitHelper];
     [_info removeFromParent];
     [_leaderboard removeFromParent];
-
+    
     if (![node.name isEqualToString:@"background"]){
         if ([node.name isEqualToString:@"scoresButton"]){
             [gameKitHelper updateAndShowGameCenter];
@@ -184,7 +188,7 @@
         
         [self removeSelection];
     }
-
+    
 }
 
 -(void)selectNode:(SKNode *)node{
@@ -197,7 +201,7 @@
         
         _selectedNode.alpha = .8;
         [_selectedNode runAction:_selectAction];
-    
+        
         _highlight.particleBirthRate = _selectedNode.frame.size.width/10;
         _highlight.particlePositionRange = CGVectorMake(_selectedNode.frame.size.width,_selectedNode.frame.size.height);
         [_selectedNode addChild:_highlight];
@@ -209,7 +213,7 @@
     if ([_selectedNode.name isEqualToString:@"startButton"]||
         [_selectedNode.name isEqualToString:@"themesButton"]||
         [_selectedNode.name isEqualToString:@"scoresButton"]){
-
+        
         [_highlight removeFromParent];
         _selectedNode.alpha = 1.0;
         [_selectedNode runAction:[_selectAction reversedAction]];
@@ -225,10 +229,10 @@
     
     _themeButton.fontName = _gameState.theme.font;
     _themeButton.fontColor = _gameState.theme.fontColor;
-
+    
     _scoresButton.fontName = _gameState.theme.font;
     _scoresButton.fontColor = _gameState.theme.fontColor;
-
+    
 }
 
 @end

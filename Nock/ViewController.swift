@@ -12,6 +12,10 @@ class ViewController: UIViewController {
         let gameView = SKView()
         view = gameView
         
+        let scene = SKScene(size: CGSize(width: view.frame.width, height: view.frame.height)) //DLMenuScene(size:gameView.bounds.size)
+        
+        scene.scaleMode = SKSceneScaleMode.Fill
+        gameView.presentScene(scene)
         // Do any additional setup after loading the view, typically from a nib.
     }
 
