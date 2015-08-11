@@ -42,8 +42,8 @@ enum {
 @property SKEmitterNode *timeBonusEmitter;
 
 @end
-@implementation DLGameScene{
-}
+
+@implementation DLGameScene{}
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
@@ -238,17 +238,14 @@ enum {
 -(void)setUpPlayer
 {
     //create player
-    SKEmitterNode *trail = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"trail" ofType:@"sks"]];
     NSInteger playerSize = [(NSNumber *)_settingsDictionary[@"playerSizeIPad"] integerValue];
+    _player = [[PlayerPuck alloc] initWithSize:playerSize gameBoard:self];
     CGPoint position = CGPointMake(self.size.width/4, self.size.height/2);
     if (!IPAD) {
         playerSize = [(NSNumber *)_settingsDictionary[@"playerSizeIPhone"] integerValue];
         position = CGPointMake(self.size.width/2, self.size.height/4);
     }
-    _player = [[Puck alloc] initWithRadius:playerSize
-                            pullForce:_playerPullForceScale
-                           flickForce:_playerFlickForceScale
-                                trail:trail
+    _player = [[PlayerPuck alloc] initWithSize:playerSize
                             gameBoard: self];
     _player.position = position;
     
@@ -282,7 +279,7 @@ enum {
         ballRadius =[(NSNumber *)_settingsDictionary[@"ballSizeIPhone"] integerValue];
         startPosition = CGPointMake(self.size.width/2, self.size.height*3/4);
     }
-    _ball = [[Puck alloc] initWithRadius:ballRadius pullForce:0 flickForce:0 trail:trail gameBoard:self];
+    _ball = [[Puck alloc] initWithRadius:ballRadius trail:trail];
     _ball.position = startPosition;
     
     _ball.sprite = [SKSpriteNode spriteNodeWithImageNamed:_gameState.theme.ballSprite];

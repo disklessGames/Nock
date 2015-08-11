@@ -7,15 +7,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Setup gamekit
-        
-        let gameView = SKView()
+        //TODO Setup gamekit
         
         let scene = DLMenuScene(size:view.bounds.size)
-        scene.scaleMode = SKSceneScaleMode.Fill
+
+        let gameView = SKView()
         view = gameView
         gameView.presentScene(scene)
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     override func didReceiveMemoryWarning() {
@@ -35,8 +33,8 @@ class ViewController: UIViewController {
         }
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return .Landscape
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 }
 

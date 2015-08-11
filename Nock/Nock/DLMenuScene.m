@@ -9,7 +9,7 @@
 @interface DLMenuScene()
 
 @property DLInfoNode *info;
-@property DLGameState *gameState;
+@property (weak) DLGameState *gameState;
 @property DLLeaderboard *leaderboard;
 
 @property SKEmitterNode *highlight;
@@ -28,6 +28,8 @@
 -(instancetype)initWithSize:(CGSize)size{
     if (self = [super initWithSize:size]) {
         self.backgroundColor = [UIColor redColor];
+        self.scaleMode = SKSceneScaleModeFill;
+
         _gameState = [DLGameState sharedGameState];//TODO Bad idea
         
         [self setupBackground];
