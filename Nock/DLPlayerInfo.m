@@ -5,9 +5,9 @@
 
 @synthesize highScore = _highScore;
 
--(instancetype)initWithPlayerID:(NSString *)playerId{
+-(instancetype)initWithPlayer:(GKPlayer *) player {
     if (self = [super init]){
-        _id = playerId;
+        self.player = player;
     }
     return self;
 }

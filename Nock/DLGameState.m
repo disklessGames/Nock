@@ -8,9 +8,6 @@
     NSInteger _themeIndex;
 }
 
-@synthesize friendScores = _friendScores;
-@synthesize playerScore = _playerScore;
-
 + (instancetype)sharedGameState{
     
     static DLGameState *sharedGameState;
@@ -47,12 +44,7 @@
     _isCountdown = YES;
     _isGameOver = NO;
     _totalTime = 10;
-    _playerScore = 0;
-
-}
-
--(NSInteger)playerScore{
-    return _playerScore;
+    self.playerScore = 0;
 }
 
 -(void)setPlayerScore:(NSInteger)playerScore{
@@ -62,16 +54,11 @@
     }
 }
 
--(NSDictionary *)friendScores{
-    return _friendScores;
-}
-
 -(void)setFriendScores:(NSDictionary *)friends{
-    _friendScores = friends;
-    _highScores = [[_friendScores allValues] sortedArrayUsingSelector:@selector(highScoreCompare:)];
-    _totalScores = [[_friendScores allValues] sortedArrayUsingSelector:@selector(totalScoreCompare:)];
+    self.friendScores = friends;
+    _highScores = [[self.friendScores allValues] sortedArrayUsingSelector:@selector(highScoreCompare:)];
+    _totalScores = [[self.friendScores allValues] sortedArrayUsingSelector:@selector(totalScoreCompare:)];
 }
-
 
 -(DLPlayerInfo *)nextTarget{
     _currentTarget = _player.highScore;
