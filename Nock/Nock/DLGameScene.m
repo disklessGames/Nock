@@ -19,7 +19,7 @@ enum {
 @property SKNode *field;
 @property SKNode *hud;
 @property Puck *ball;
-@property Puck *player;
+@property PlayerPuck *player;
 
 @property CGPoint startLocation;
 @property NSInteger playerPullForceScale;
@@ -80,12 +80,6 @@ enum {
             [self cleanUpChildrenAndRemove:self];
             [self.view presentScene:menu transition:[SKTransition fadeWithDuration:.5]];
         }
-        //    [_scoreLabel removeAllActions];
-        
-    }else{
-        
-        if (_player.touched){
-        }
     }
     _player.touched = NO;
     
@@ -98,12 +92,10 @@ enum {
     
     if (!_gameState.isCountdown){
         if (!_gameState.isGameOver) {
-            
             CFTimeInterval thisFrameStartTime = CFAbsoluteTimeGetCurrent();
             float deltaTimeInSeconds = thisFrameStartTime - _startTime;
             _timeLeft = _gameState.totalTime-deltaTimeInSeconds;
             _timeLabel.text = [NSString stringWithFormat:@"%.0f sec", _timeLeft ];
-            
             
             if (deltaTimeInSeconds > _gameState.totalTime && !_gameState.isGameOver) {
                 _gameState.isGameOver = YES;
@@ -239,7 +231,6 @@ enum {
 {
     //create player
     NSInteger playerSize = [(NSNumber *)_settingsDictionary[@"playerSizeIPad"] integerValue];
-    _player = [[PlayerPuck alloc] initWithSize:playerSize gameBoard:self];
     CGPoint position = CGPointMake(self.size.width/4, self.size.height/2);
     if (!IPAD) {
         playerSize = [(NSNumber *)_settingsDictionary[@"playerSizeIPhone"] integerValue];

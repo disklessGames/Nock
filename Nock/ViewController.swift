@@ -4,14 +4,16 @@ import SpriteKit
 
 class ViewController: UIViewController {
     
+    let gameView = SKView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //TODO Setup gamekit
         
         let scene = DLMenuScene(size:view.bounds.size)
+        scene.scaleMode = .ResizeFill;
 
-        let gameView = SKView()
         view = gameView
         gameView.presentScene(scene)
     }
