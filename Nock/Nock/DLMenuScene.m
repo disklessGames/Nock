@@ -25,6 +25,18 @@
 @implementation DLMenuScene{
 }
 
+- (void)setupMenu {
+    [self setupBackground];
+    [self setupSelectionHighlight];
+    [self setupTitleButton];
+    [self setupTitleZoomLoop];
+    [self setupScoresButton];
+    [self setupThemeButton];
+    //[self setupLeaderboard];
+    [self adaptForiPhone];
+    [self applyTheme];
+}
+
 -(instancetype)initWithSize:(CGSize)size{
     if (self = [super initWithSize:size]) {
         self.backgroundColor = [UIColor redColor];
@@ -32,15 +44,7 @@
 
         _gameState = [DLGameState sharedGameState];//TODO Bad idea
         
-        [self setupBackground];
-        [self setupSelectionHighlight];
-        [self setupTitleButton];
-        [self setupTitleZoomLoop];
-        [self setupScoresButton];
-        [self setupThemeButton];
-        [self setupLeaderboard];
-        [self adaptForiPhone];
-        [self applyTheme];
+        [self setupMenu];
     }
     return self;
 }
@@ -230,6 +234,10 @@
     _scoresButton.fontName = _gameState.theme.font;
     _scoresButton.fontColor = _gameState.theme.fontColor;
     
+}
+
+-(void)didChangeSize:(CGSize)oldSize {
+    [self setupMenu];
 }
 
 @end
