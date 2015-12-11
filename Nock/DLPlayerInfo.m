@@ -1,3 +1,10 @@
+//
+//  DLGameState.m
+//  Nock
+//
+//  Created by Jannie Theron on 2014/05/27.
+//  Copyright (c) 2014 pantsula. All rights reserved.
+//
 
 #import "DLPlayerInfo.h"
 
@@ -5,9 +12,9 @@
 
 @synthesize highScore = _highScore;
 
--(instancetype)initWithPlayer:(GKPlayer *) player {
+-(instancetype)initWithPlayerID:(NSString *)playerId{
     if (self = [super init]){
-        self.player = player;
+        _id = playerId;
     }
     return self;
 }

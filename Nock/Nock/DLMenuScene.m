@@ -2,16 +2,13 @@
 #import "DLMenuScene.h"
 #import "DLGameScene.h"
 #import "DLGameKitHelper.h"
-#import "DLInfoNode.h"
-#import "DLGameState.h"
+#import "DLInfo.h"
+#import "Nock-Swift.h"
 #import "DLLeaderboard.h"
 
 @interface DLMenuScene()
 
-@property DLInfoNode *info;
-@property (weak) DLGameState *gameState;
-@property DLLeaderboard *leaderboard;
-
+@property DLInfo *info;
 @property SKEmitterNode *highlight;
 @property SKNode *selectedNode;
 @property SKAction *selectAction;
@@ -19,39 +16,30 @@
 @property SKLabelNode *themeButton;
 @property SKLabelNode *scoresButton;
 @property SKSpriteNode *backGround;
+@property GameState *gameState;
+@property DLLeaderboard *leaderboard;
 
 @end
-
 @implementation DLMenuScene{
-}
-
-- (void)setupMenu {
-    [self setupBackground];
-    [self setupSelectionHighlight];
-    [self setupTitleButton];
-    [self setupTitleZoomLoop];
-    [self setupScoresButton];
-    [self setupThemeButton];
-    //[self setupLeaderboard];
-    [self adaptForiPhone];
-    [self applyTheme];
 }
 
 -(instancetype)initWithSize:(CGSize)size{
     if (self = [super initWithSize:size]) {
-        self.backgroundColor = [UIColor redColor];
-        self.scaleMode = SKSceneScaleModeFill;
-
-        _gameState = [DLGameState sharedGameState];//TODO Bad idea
+        _gameState = [GameState sharedGameState];
         
-        [self setupMenu];
+        [self setupSelectionHighlight];
+        [self setupBackground];
+        [self setupTitleButton];
+        [self setupTitleZoomLoop];
+        [self setupScoresButton];
+        [self setupThemeButton];
+        [self setupLeaderboard];
+        [self adaptForiPhone];
+        [self applyTheme];
     }
     return self;
 }
 
--(void)update:(NSTimeInterval)currentTime {
-    NSLog(@"Update called at %f",currentTime);
-}
 
 - (void)setupSelectionHighlight {
     _highlight = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"menuHighlight" ofType:@"sks"]];
@@ -72,7 +60,7 @@
 }
 
 - (void)setupTitleButton {
-    _titleButton = [SKLabelNode labelNodeWithFontNamed:_gameState.theme.font];
+    _titleButton = [SKLabelNode labelNodeWithFontNamed:_gameState.currentTheme.font];
     _titleButton.fontSize = 300;
     _titleButton.text = @"Nock";
     _titleButton.position = CGPointMake(self.size.width/2, self.size.height*0.60);
@@ -83,10 +71,10 @@
 }
 
 - (void)setupScoresButton {
-    _scoresButton = [SKLabelNode labelNodeWithFontNamed:_gameState.theme.font];
+    _scoresButton = [SKLabelNode labelNodeWithFontNamed:_gameState.currentTheme.font];
     _scoresButton.fontSize = 45;
     _scoresButton.text = [NSString stringWithFormat: @"Last - %ld Best - %ld Total - %ld",(long)_gameState.playerScore,(long)_gameState.player.highScore,(long)_gameState.player.totalScore];
-    _scoresButton.fontColor = _gameState.theme.fontColor;
+    _scoresButton.fontColor = _gameState.currentTheme.fontColor;
     _scoresButton.name = @"scoresButton";
     _scoresButton.position = CGPointMake(self.size.width/2, self.size.height*0.35);
     _scoresButton.zPosition = 10;
@@ -96,10 +84,10 @@
 }
 
 - (void)setupThemeButton {
-    _themeButton = [SKLabelNode labelNodeWithFontNamed:_gameState.theme.font];
+    _themeButton = [SKLabelNode labelNodeWithFontNamed:_gameState.currentTheme.font];
     _themeButton.fontSize = 45;
     _themeButton.text = @"Theme";
-    _themeButton.fontColor = _gameState.theme.fontColor;
+    _themeButton.fontColor = _gameState.currentTheme.fontColor;
     _themeButton.position = CGPointMake(self.size.width/2, self.size.height*0.25);
     _themeButton.name = @"themesButton";
     _themeButton.zPosition = 10;
@@ -119,7 +107,7 @@
 }
 
 - (void)setupBackground {
-    _backGround = [SKSpriteNode spriteNodeWithImageNamed:_gameState.theme.background];
+    _backGround = [SKSpriteNode spriteNodeWithImageNamed:_gameState.currentTheme.background];
     _backGround.position = CGPointMake(self.size.width/2, self.size.height/2);
     _backGround.zPosition = 5;
     [self addChild:_backGround];
@@ -127,16 +115,16 @@
 }
 
 - (void)setupLeaderboard {
-    NSDictionary *allScores;
-    if (_gameState.highScores && _gameState.totalScores){
-        
-        allScores = [NSDictionary dictionaryWithObjects:@[_gameState.highScores,_gameState.totalScores] forKeys:@[@"High Scores",@"Total Nocks"]];
-    }else{
-        allScores = [NSDictionary dictionaryWithObjects:@[@[_gameState.player],@[_gameState.player]] forKeys:@[@"High Scores",@"Total Nocks"]];
-        //create dictionary with local scores
-    }
-    _leaderboard = [[DLLeaderboard alloc]initWithSize:self.size atPosition:CGPointMake(self.size.width/2, self.size.height/2)];
-    _leaderboard.scores = allScores;
+//    NSDictionary *allScores;
+//    if (_gameState.highScores && _gameState.totalScores){
+//        
+//        allScores = [NSDictionary dictionaryWithObjects:@[_gameState.highScores,_gameState.totalScores] forKeys:@[@"High Scores",@"Total Nocks"]];
+//    }else{
+//        allScores = [NSDictionary dictionaryWithObjects:@[@[_gameState.player],@[_gameState.player]] forKeys:@[@"High Scores",@"Total Nocks"]];
+//        //create dictionary with local scores
+//    }
+//    _leaderboard = [[DLLeaderboard alloc]initWithSize:self.size atPosition:CGPointMake(self.size.width/2, self.size.height/2)];
+//    _leaderboard.scores = allScores;
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -174,7 +162,7 @@
     DLGameKitHelper *gameKitHelper = [DLGameKitHelper sharedGameKitHelper];
     [_info removeFromParent];
     [_leaderboard removeFromParent];
-    
+
     if (![node.name isEqualToString:@"background"]){
         if ([node.name isEqualToString:@"scoresButton"]){
             [gameKitHelper updateAndShowGameCenter];
@@ -182,14 +170,14 @@
             [_gameState loadNextTheme];
             [self applyTheme];
         }else if ([node.name isEqualToString: @"startButton"] ){
-            [[DLGameState sharedGameState] resetGame];
+            [[GameState sharedGameState] resetGame];
             DLGameScene *game = [[DLGameScene alloc]initWithSize:self.size];
             [self.view presentScene:game transition:[SKTransition fadeWithDuration:.5]];
         }
         
         [self removeSelection];
     }
-    
+
 }
 
 -(void)selectNode:(SKNode *)node{
@@ -202,11 +190,11 @@
         
         _selectedNode.alpha = .8;
         [_selectedNode runAction:_selectAction];
-        
+    
         _highlight.particleBirthRate = _selectedNode.frame.size.width/10;
         _highlight.particlePositionRange = CGVectorMake(_selectedNode.frame.size.width,_selectedNode.frame.size.height);
         [_selectedNode addChild:_highlight];
-        [_selectedNode runAction:[SKAction playSoundFileNamed:_gameState.theme.hitSound waitForCompletion:YES]];
+        [_selectedNode runAction:[SKAction playSoundFileNamed:_gameState.currentTheme.ballHitSound waitForCompletion:YES]];
     }
 }
 
@@ -214,7 +202,7 @@
     if ([_selectedNode.name isEqualToString:@"startButton"]||
         [_selectedNode.name isEqualToString:@"themesButton"]||
         [_selectedNode.name isEqualToString:@"scoresButton"]){
-        
+
         [_highlight removeFromParent];
         _selectedNode.alpha = 1.0;
         [_selectedNode runAction:[_selectAction reversedAction]];
@@ -223,21 +211,17 @@
 }
 
 -(void)applyTheme{
-    _backGround.texture = [SKTexture textureWithImageNamed:_gameState.theme.background];
+    _backGround.texture = [SKTexture textureWithImageNamed:_gameState.currentTheme.background];
     
-    _titleButton.fontName = _gameState.theme.font;
-    _titleButton.fontColor = _gameState.theme.fontColor;
+    _titleButton.fontName = _gameState.currentTheme.font;
+    _titleButton.fontColor = _gameState.currentTheme.fontColor;
     
-    _themeButton.fontName = _gameState.theme.font;
-    _themeButton.fontColor = _gameState.theme.fontColor;
-    
-    _scoresButton.fontName = _gameState.theme.font;
-    _scoresButton.fontColor = _gameState.theme.fontColor;
-    
-}
+    _themeButton.fontName = _gameState.currentTheme.font;
+    _themeButton.fontColor = _gameState.currentTheme.fontColor;
 
--(void)didChangeSize:(CGSize)oldSize {
-    [self setupMenu];
+    _scoresButton.fontName = _gameState.currentTheme.font;
+    _scoresButton.fontColor = _gameState.currentTheme.fontColor;
+
 }
 
 @end

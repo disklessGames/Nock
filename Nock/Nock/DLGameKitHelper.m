@@ -1,6 +1,12 @@
+//
+//  DLGameKitHelper.m
+//  Nock
+//
+//  Created by Jannie Theron on 2014/05/19.
+//  Copyright (c) 2014 pantsula. All rights reserved.
+//
 
 #import "DLGameKitHelper.h"
-#import "Nock-Swift.h"
 
 NSString *const PresentAuthenticationViewController = @"present_authentication_view_controller";
 NSString *const LeaderboardIPhone = @"iPhoneMax";
@@ -11,14 +17,6 @@ NSString *const DLHideAds = @"disklessDisableAds";
 
 
 @implementation DLGameKitHelper
-@synthesize gameCenterEnabled = _gameCenterEnabled;
-@synthesize totalScore = _totalScore;
-@synthesize highScore  = _highScore;
-@synthesize lastScore = _lastScore;
-@synthesize playersHighScores = _playersHighScores;
-@synthesize playersTotalScores = _playersTotalScores;
-@synthesize authenticationViewController = _authenticationViewController;
-@synthesize localPlayer = _localPlayer;
 
 + (instancetype)sharedGameKitHelper
 {
@@ -58,7 +56,7 @@ NSString *const DLHideAds = @"disklessDisableAds";
             //5
             
             [DLGameKitHelper sharedGameKitHelper ].gameCenterEnabled = YES;
-            [DLGameState sharedGameState].player.player = [GKLocalPlayer localPlayer];
+            [GameState sharedGameState].player.id = [GKLocalPlayer localPlayer].playerID;
 
             [[DLGameKitHelper sharedGameKitHelper]refreshGameStateScores];
         } else {
@@ -91,23 +89,24 @@ NSString *const DLHideAds = @"disklessDisableAds";
         } else if (scores) {
             GKScore *localPlayerScore = leaderboardRequest.localPlayerScore;
             
-            [DLGameState sharedGameState].player.totalScore =  [NSNumber numberWithLongLong:localPlayerScore.value].integerValue;
-            NSMutableDictionary *friends = [NSMutableDictionary dictionaryWithCapacity:[scores count]];
+            [GameState sharedGameState].player.totalScore =  [NSNumber numberWithLongLong:localPlayerScore.value].integerValue;
+            NSMutableDictionary<NSString *, DLPlayerInfo *> *friends = [NSMutableDictionary dictionaryWithCapacity:[scores count]];
             
             [scores enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
                 GKScore *s = (GKScore *)obj;
                 DLPlayerInfo *newFriend = [[DLPlayerInfo alloc ]init];
-                newFriend.player = s.player;
-                newFriend.totalScore = (NSInteger)s.value;
-                [friends setValue:newFriend forKey:newFriend.player.playerID];
+                newFriend.id = s.playerID;
+                newFriend.totalScore= (NSInteger)s.value;
+                friends[s.playerID] = newFriend;
             }];
-            [DLGameState sharedGameState].friendScores = friends;
+            
+            [GameState sharedGameState].friends = friends;
             [GKPlayer loadPlayersForIdentifiers:[_playersTotalScores allKeys] withCompletionHandler:^(NSArray *players, NSError *error) {
                 [players enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    GKPlayer *player = (GKPlayer *)obj;
-                    DLPlayerInfo *currentPlayer = [DLGameState sharedGameState].friendScores[player.playerID];
-                    currentPlayer.name = player.displayName;
-                    [player loadPhotoForSize:GKPhotoSizeSmall withCompletionHandler:^(UIImage *photo, NSError *error) {
+                    GKPlayer *p = (GKPlayer *)obj;
+                    DLPlayerInfo *currentPlayer = [GameState sharedGameState].friends[p.playerID];
+                    currentPlayer.name = p.displayName;
+                    [p loadPhotoForSize:GKPhotoSizeSmall withCompletionHandler:^(UIImage *photo, NSError *error) {
                         if (photo) {
                             currentPlayer.photo=photo;
                         }
@@ -134,8 +133,8 @@ NSString *const DLHideAds = @"disklessDisableAds";
             //NSLog(@"Local player's score from Leaderboard %@: %lld", LeaderboardIPad, localPlayerScore.value);
             [DLGameKitHelper sharedGameKitHelper].highScore = [NSNumber numberWithLongLong:localPlayerScore.value].integerValue;
             [scores enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
-                GKScore *score = (GKScore *)obj;
-                [[DLGameState sharedGameState].friendScores[score.player.playerID] setHighScore:(NSInteger)score.value];
+                GKScore *s = (GKScore *)obj;
+                [[GameState sharedGameState].friends[s.playerID] setHighScore:(NSInteger)s.value];
             }];
         }
     }];
@@ -168,7 +167,7 @@ NSString *const DLHideAds = @"disklessDisableAds";
 
 -(void) persistScoreswithCompletionHandler:(void (^)(id))block{
     
-    DLGameState *gameState = [DLGameState sharedGameState];
+    GameState *gameState = [GameState sharedGameState];
     [gameState persist];
     
     GKScore *score = [GKScore alloc];

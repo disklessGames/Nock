@@ -7,7 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "DLGameState.h"
+#import "Nock-Swift.h"
 
 @interface settingsNode : SKNode
 

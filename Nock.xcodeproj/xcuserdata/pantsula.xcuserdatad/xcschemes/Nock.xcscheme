@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "791C661D1B6FECAA00D58F9D"
+               BlueprintIdentifier = "57FE4DFB1920C8F5007A7317"
                BuildableName = "Nock.app"
                BlueprintName = "Nock"
                ReferencedContainer = "container:Nock.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "791C66321B6FECAA00D58F9D"
+               BlueprintIdentifier = "57FE4E261920C8F5007A7317"
                BuildableName = "NockTests.xctest"
                BlueprintName = "NockTests"
                ReferencedContainer = "container:Nock.xcodeproj">
@@ -46,7 +46,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "791C66321B6FECAA00D58F9D"
+               BlueprintIdentifier = "57FE4E261920C8F5007A7317"
                BuildableName = "NockTests.xctest"
                BlueprintName = "NockTests"
                ReferencedContainer = "container:Nock.xcodeproj">
@@ -56,7 +56,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "791C661D1B6FECAA00D58F9D"
+            BlueprintIdentifier = "57FE4DFB1920C8F5007A7317"
             BuildableName = "Nock.app"
             BlueprintName = "Nock"
             ReferencedContainer = "container:Nock.xcodeproj">
@@ -79,7 +79,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "791C661D1B6FECAA00D58F9D"
+            BlueprintIdentifier = "57FE4DFB1920C8F5007A7317"
             BuildableName = "Nock.app"
             BlueprintName = "Nock"
             ReferencedContainer = "container:Nock.xcodeproj">
@@ -98,7 +98,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "791C661D1B6FECAA00D58F9D"
+            BlueprintIdentifier = "57FE4DFB1920C8F5007A7317"
             BuildableName = "Nock.app"
             BlueprintName = "Nock"
             ReferencedContainer = "container:Nock.xcodeproj">
