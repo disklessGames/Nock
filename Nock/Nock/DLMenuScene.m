@@ -2,13 +2,11 @@
 #import "DLMenuScene.h"
 #import "DLGameScene.h"
 #import "DLGameKitHelper.h"
-#import "DLInfo.h"
 #import "Nock-Swift.h"
 #import "DLLeaderboard.h"
 
 @interface DLMenuScene()
 
-@property DLInfo *info;
 @property SKEmitterNode *highlight;
 @property SKNode *selectedNode;
 @property SKAction *selectAction;
@@ -17,7 +15,7 @@
 @property SKLabelNode *scoresButton;
 @property SKSpriteNode *backGround;
 @property GameState *gameState;
-@property DLLeaderboard *leaderboard;
+//@property DLLeaderboard *leaderboard;
 
 @end
 @implementation DLMenuScene{
@@ -27,10 +25,7 @@
     if (self = [super initWithSize:size]) {
         _gameState = [GameState sharedGameState];
         
-        [self setupSelectionHighlight];
-        [self setupBackground];
-        [self setupTitleButton];
-        [self setupTitleZoomLoop];
+         [self setupTitleZoomLoop];
         [self setupScoresButton];
         [self setupThemeButton];
         [self setupLeaderboard];
@@ -59,42 +54,6 @@
     
 }
 
-- (void)setupTitleButton {
-    _titleButton = [SKLabelNode labelNodeWithFontNamed:_gameState.currentTheme.font];
-    _titleButton.fontSize = 300;
-    _titleButton.text = @"Nock";
-    _titleButton.position = CGPointMake(self.size.width/2, self.size.height*0.60);
-    _titleButton.name = @"startButton";
-    _titleButton.zPosition = 10;
-    _titleButton.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    _titleButton.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-}
-
-- (void)setupScoresButton {
-    _scoresButton = [SKLabelNode labelNodeWithFontNamed:_gameState.currentTheme.font];
-    _scoresButton.fontSize = 45;
-    _scoresButton.text = [NSString stringWithFormat: @"Last - %ld Best - %ld Total - %ld",(long)_gameState.playerScore,(long)_gameState.player.highScore,(long)_gameState.player.totalScore];
-    _scoresButton.fontColor = _gameState.currentTheme.fontColor;
-    _scoresButton.name = @"scoresButton";
-    _scoresButton.position = CGPointMake(self.size.width/2, self.size.height*0.35);
-    _scoresButton.zPosition = 10;
-    _scoresButton.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    _scoresButton.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-    [self addChild:_scoresButton];
-}
-
-- (void)setupThemeButton {
-    _themeButton = [SKLabelNode labelNodeWithFontNamed:_gameState.currentTheme.font];
-    _themeButton.fontSize = 45;
-    _themeButton.text = @"Theme";
-    _themeButton.fontColor = _gameState.currentTheme.fontColor;
-    _themeButton.position = CGPointMake(self.size.width/2, self.size.height*0.25);
-    _themeButton.name = @"themesButton";
-    _themeButton.zPosition = 10;
-    _themeButton.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    _themeButton.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-    [self addChild:_themeButton];
-}
 
 - (void)adaptForiPhone {
     if (!IPAD){
@@ -160,7 +119,6 @@
         node = node.parent;
     }
     DLGameKitHelper *gameKitHelper = [DLGameKitHelper sharedGameKitHelper];
-    [_info removeFromParent];
     [_leaderboard removeFromParent];
 
     if (![node.name isEqualToString:@"background"]){

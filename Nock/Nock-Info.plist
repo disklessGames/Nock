@@ -27,7 +27,7 @@
 	<key>UILaunchStoryboardName</key>
 	<string>Main_iPhone</string>
 	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
+	<string>Main_iPhone</string>
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>Main_iPhone</string>
 	<key>UIRequiredDeviceCapabilities</key>
