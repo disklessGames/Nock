@@ -2,7 +2,6 @@
 #import <Foundation/Foundation.h>
 #import "DLLeaderBoard.h"
 #import "Nock-Swift.h"
-#import "DLPlayerInfo.h"
 
 @implementation DLLeaderboard{
     GameState *_gameState;
@@ -17,7 +16,7 @@
         background.position = centerPosition;
         [self addChild:background];
         int i=0;
-        for (DLPlayerInfo *score in _scores[@"Total Nocks"]){
+        for (PlayerInfo *score in _scores[@"Total Nocks"]){
             SKLabelNode *scoreLabel = [SKLabelNode labelNodeWithFontNamed:_gameState.currentTheme.font];
             scoreLabel.text = [NSString stringWithFormat:@"%d. %@  %ld",i++,
                                score.name,(long)score.highScore];

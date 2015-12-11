@@ -6,12 +6,12 @@ class GameState: NSObject {
     static let sharedGameState = GameState()
     
     var totalTime = 10
-    let player = DLPlayerInfo()
+    var player: PlayerInfo?
     var playerScore = 0
     var isCountdown = true
     var isGameOver = false
     let currentTarget = 0
-    var friends = [String: DLPlayerInfo]()
+    var friends = [String: PlayerInfo]()
     let themes: [String]
     var currentTheme: Theme
     var currentThemeIndex = 0
@@ -27,7 +27,7 @@ class GameState: NSObject {
         self.currentThemeIndex = defaults.integerForKey("selectedTheme")
         let themeSettings = self.settings[self.themes[self.currentThemeIndex]] as! [String: String]
         self.currentTheme = Theme(themeInfo: themeSettings)
-            super.init()
+        super.init()
     }
     
     func resetGame() {
@@ -37,17 +37,19 @@ class GameState: NSObject {
         isGameOver = false
     }
     
-    func nextTarget() -> DLPlayerInfo? {
+    func nextTarget() -> PlayerInfo? {
         return friends.sort { $0.1.highScore > $1.1.highScore }.filter { $0.1.highScore > playerScore }.first?.1
     }
     
-    func previousTarget() -> DLPlayerInfo? {
+    func previousTarget() -> PlayerInfo? {
         return friends.sort { $0.1.highScore > $1.1.highScore }.filter { $0.1.highScore < playerScore }.first?.1
     }
     
     func persist() {
-        defaults.setInteger(player.highScore, forKey: "highScore")
-        defaults.setInteger(player.totalScore, forKey: "totalScore")
+        if let player = player {
+            defaults.setInteger(player.highScore, forKey: "highScore")
+            defaults.setInteger(player.totalScore, forKey: "totalScore")
+        }
     }
     
     func loadNextTheme() {
