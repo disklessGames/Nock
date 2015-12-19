@@ -7,7 +7,6 @@
 //
 
 #import "DLGameKitHelper.h"
-#import "Nock-Swift.h"
 
 NSString *const PresentAuthenticationViewController = @"present_authentication_view_controller";
 NSString *const LeaderboardIPhone = @"iPhoneMax";
@@ -57,7 +56,6 @@ NSString *const DLHideAds = @"disklessDisableAds";
             //5
             
             [DLGameKitHelper sharedGameKitHelper ].gameCenterEnabled = YES;
-            
             GKLocalPlayer *player = [GKLocalPlayer localPlayer];
             [GameState sharedGameState].player = [[PlayerInfo alloc] initWithPlayerId:player.playerID name:player.alias highScore:0 totalScore:0 photo:nil];
             
@@ -97,7 +95,7 @@ NSString *const DLHideAds = @"disklessDisableAds";
             
             [scores enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
                 GKScore *s = (GKScore *)obj;
-                PlayerInfo *newFriend = [[PlayerInfo alloc ]initWithPlayerId:s.player.playerID name:s.player.alias highScore:0 totalScore:(NSInteger)s.value photo:nil];
+                PlayerInfo *newFriend = [[PlayerInfo alloc ]initWithPlayerId:s.player.playerID name:s.player.alias highScore:(NSInteger)s.value totalScore:(NSInteger)s.value photo:nil];
                 friends[s.player.playerID] = newFriend;
             }];
             

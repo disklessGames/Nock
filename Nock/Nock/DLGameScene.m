@@ -1,6 +1,7 @@
 
 #import "DLGameScene.h"
 #import "DLMenuScene.h"
+#import "DLPuck.h"
 #import "DLGameKitHelper.h"
 #import "Nock-Swift.h"
 
@@ -17,8 +18,8 @@ enum {
 @property NSDictionary *settingsDictionary;
 @property SKNode *field;
 @property SKNode *hud;
-@property Puck *ball;
-@property Puck *player;
+@property DLPuck *ball;
+@property DLPuck *player;
 
 @property CGPoint startLocation;
 @property NSInteger playerPullForceScale;
@@ -78,11 +79,19 @@ enum {
             [self cleanUpChildrenAndRemove:self];
             [self.view presentScene:menu transition:[SKTransition fadeWithDuration:.5]];
         }
+        //    [_scoreLabel removeAllActions];
+        
+    }else{
+        
+        if (_player.touched){
+        }
     }
+    _player.touched = NO;
+    
 }
 
 -(void)update:(CFTimeInterval)currentTime {
-    if (self.player.touching){
+    if (self.player.touched){
         [_player.physicsBody applyForce:CGVectorMake((_player.endLocation.x - _player.position.x) * _playerPullForceScale, (_player.endLocation.y - _player.position.y )*_playerPullForceScale) atPoint:CGPointMake(_player.position.x, _player.position.y)] ;
     }
     
@@ -227,23 +236,24 @@ enum {
 
 -(void)setUpPlayer
 {
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:_gameState.currentTheme.playerSprite];
-    sprite.name = @"player";
-
-    SKEmitterNode *trail = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"trail" ofType:@"sks"]];
-    trail.particleTexture = [SKTexture textureWithImageNamed:_gameState.currentTheme.playerTrail];
-
+    //create player
+    _player = [DLPuck node];
     
     if (IPAD) {
-        _player = [[Puck alloc] initWithRadius:[(NSNumber *)_settingsDictionary[@"playerSizeIPad"] integerValue] sprite:sprite trail:trail settings:_settingsDictionary];
+        _player = [_player initWithRadius:[(NSNumber *)_settingsDictionary[@"playerSizeIPad"] integerValue] settings:self.settingsDictionary];
         _player.position = CGPointMake(self.size.width/4, self.size.height/2);
     } else {
-        _player = [[Puck alloc] initWithRadius:[(NSNumber *)_settingsDictionary[@"playerSizeIPhone"] integerValue] sprite:sprite trail:trail settings:self.settingsDictionary];
+        _player = [_player initWithRadius:[(NSNumber *)_settingsDictionary[@"playerSizeIPhone"] integerValue] settings:self.settingsDictionary];
         _player.position = CGPointMake(self.size.width/2, self.size.height/4);
     }
     [self addChild:_player];
     
     _player.zPosition = 50;
+    _player.trail = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"trail" ofType:@"sks"]];
+    //set particle image
+    _player.trail.particleTexture = [SKTexture textureWithImageNamed:_gameState.currentTheme.playerTrail];
+    _player.sprite = [SKSpriteNode spriteNodeWithImageNamed:_gameState.currentTheme.playerSprite];
+    _player.sprite.name = @"player";
     
     
     _player.physicsBody.linearDamping = 1;
@@ -255,20 +265,21 @@ enum {
 
 -(void)setUpOpponents
 {
-    SKEmitterNode *trail = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"ballTrail" ofType:@"sks"]];
-    trail.name = @"ballTrail";
-    trail.particleTexture = [SKTexture textureWithImageNamed:_gameState.currentTheme.ballTrail];
-    
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:_gameState.currentTheme.ballSprite];
-
+    //create balls
+    _ball = [DLPuck node];
     if (IPAD) {
-        _ball = [[Puck alloc] initWithRadius:[(NSNumber *)_settingsDictionary[@"ballSizeIPad"] integerValue] sprite:sprite trail:trail settings:self.settingsDictionary];
+        _ball = [_ball initWithRadius:[(NSNumber *)_settingsDictionary[@"ballSizeIPad"] integerValue] settings:self.settingsDictionary];
         _ball.position = CGPointMake(self.size.width*3/4, self.size.height/2);
     } else {
-        _ball = [[Puck alloc] initWithRadius:[(NSNumber *)_settingsDictionary[@"ballSizeIPhone"] integerValue] sprite:sprite trail:trail settings:self.settingsDictionary];
+        _ball = [_ball initWithRadius:[(NSNumber *)_settingsDictionary[@"ballSizeIPhone"] integerValue] settings:self.settingsDictionary];
         _ball.position = CGPointMake(self.size.width/2, self.size.height*3/4);
     }
     [self addChild:_ball];
+    _ball.trail = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"ballTrail" ofType:@"sks"]];
+    _ball.trail.name = @"ballTrail";
+    _ball.trail.particleTexture = [SKTexture textureWithImageNamed:_gameState.currentTheme.ballTrail];
+    
+    _ball.sprite = [SKSpriteNode spriteNodeWithImageNamed:_gameState.currentTheme.ballSprite];
     _ball.physicsBody.linearDamping = .4;
     _ball.physicsBody.categoryBitMask = CollisionBall;
     
