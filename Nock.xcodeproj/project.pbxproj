@@ -41,7 +41,7 @@
 		575C281E19520DD700BE797B /* coin_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = 575C281B19520DD700BE797B /* coin_ball.png */; };
 		575C281F19520DD700BE797B /* coin_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 575C281C19520DD700BE797B /* coin_bg.png */; };
 		575C282019520DD700BE797B /* coin_player.png in Resources */ = {isa = PBXBuildFile; fileRef = 575C281D19520DD700BE797B /* coin_player.png */; };
-		578240DF193080BF0065DB8B /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 578240DD193080BF0065DB8B /* README.txt */; };
+		5777BB531C253ABD00C26AF4 /* PlayerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5777BB521C253ABD00C26AF4 /* PlayerInfo.swift */; };
 		578240E4193081570065DB8B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 578240E3193081570065DB8B /* AudioToolbox.framework */; };
 		578240EA1930817E0065DB8B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 578240E51930817E0065DB8B /* AVFoundation.framework */; };
 		578240EB1930817E0065DB8B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 578240E61930817E0065DB8B /* CoreTelephony.framework */; };
@@ -57,7 +57,6 @@
 		57932028192DDDF5000BEBB8 /* trail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 57932027192DDDF5000BEBB8 /* trail.sks */; };
 		5793202D192DDE0A000BEBB8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5793202C192DDE0A000BEBB8 /* ViewController.m */; };
 		579E3ED319238B12006B24B2 /* DLMenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 579E3ED219238B12006B24B2 /* DLMenuScene.m */; };
-		57C494A11C2536590087A4E9 /* PlayerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C494A01C2536590087A4E9 /* PlayerInfo.swift */; };
 		57CD52A7195C3B580094F56E /* space_game over.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 57CD52A4195C3B580094F56E /* space_game over.mp3 */; };
 		57CD52A8195C3B580094F56E /* space_hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 57CD52A5195C3B580094F56E /* space_hit.mp3 */; };
 		57CD52A9195C3B580094F56E /* space_slide.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 57CD52A6195C3B580094F56E /* space_slide.mp3 */; };
@@ -135,6 +134,7 @@
 		575C281B19520DD700BE797B /* coin_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = coin_ball.png; path = themes/coins/coin_ball.png; sourceTree = "<group>"; };
 		575C281C19520DD700BE797B /* coin_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = coin_bg.png; path = themes/coins/coin_bg.png; sourceTree = "<group>"; };
 		575C281D19520DD700BE797B /* coin_player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = coin_player.png; path = themes/coins/coin_player.png; sourceTree = "<group>"; };
+		5777BB521C253ABD00C26AF4 /* PlayerInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerInfo.swift; sourceTree = "<group>"; };
 		578240D0193080BF0065DB8B /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdMobExtras.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADAdMobExtras.h"; sourceTree = "<group>"; };
 		578240D1193080BF0065DB8B /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdNetworkExtras.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADAdNetworkExtras.h"; sourceTree = "<group>"; };
 		578240D2193080BF0065DB8B /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADAdSize.h; path = "../../GoogleMobileAdsSdkiOS-6.9.2/GADAdSize.h"; sourceTree = "<group>"; };
@@ -171,7 +171,6 @@
 		579BC148194E29C4001A2E5E /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		579E3ED119238B12006B24B2 /* DLMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLMenuScene.h; path = Nock/DLMenuScene.h; sourceTree = "<group>"; };
 		579E3ED219238B12006B24B2 /* DLMenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DLMenuScene.m; path = Nock/DLMenuScene.m; sourceTree = "<group>"; };
-		57C494A01C2536590087A4E9 /* PlayerInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerInfo.swift; path = ../../../../apps/Nock/Nock/PlayerInfo.swift; sourceTree = "<group>"; };
 		57CD52A4195C3B580094F56E /* space_game over.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "space_game over.mp3"; path = "themes/space/space_game over.mp3"; sourceTree = "<group>"; };
 		57CD52A5195C3B580094F56E /* space_hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = space_hit.mp3; path = themes/space/space_hit.mp3; sourceTree = "<group>"; };
 		57CD52A6195C3B580094F56E /* space_slide.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = space_slide.mp3; path = themes/space/space_slide.mp3; sourceTree = "<group>"; };
@@ -292,7 +291,7 @@
 				5793201E192DDDBE000BEBB8 /* DLPuck.m */,
 				797B4C081C181FCF0006ABB0 /* Theme.swift */,
 				797B4C0B1C1827EC0006ABB0 /* GameState.swift */,
-				57C494A01C2536590087A4E9 /* PlayerInfo.swift */,
+				5777BB521C253ABD00C26AF4 /* PlayerInfo.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -558,7 +557,6 @@
 				5755B62D195D67D9008F391D /* proto_game over.mp3 in Resources */,
 				57D31E8B1929FD2200260BBD /* iPadAppIcon.png in Resources */,
 				5753E0751937C88300C050AF /* menuHighlight.sks in Resources */,
-				578240DF193080BF0065DB8B /* README.txt in Resources */,
 				572575601950E37A00006D39 /* proto_ball_bg.png in Resources */,
 				572575571950E36800006D39 /* mod_ball.png in Resources */,
 				5734719B1947077100F25747 /* DLHud.sks in Resources */,
@@ -624,10 +622,10 @@
 				5725754C1950C0AF00006D39 /* DLLeaderboard.m in Sources */,
 				57932020192DDDBE000BEBB8 /* AppDelegate.m in Sources */,
 				57E58667193F66100024156E /* settingsScene.m in Sources */,
+				5777BB531C253ABD00C26AF4 /* PlayerInfo.swift in Sources */,
 				797B4C0C1C1827EC0006ABB0 /* GameState.swift in Sources */,
 				57932025192DDDBE000BEBB8 /* DLPuck.m in Sources */,
 				797B4C091C181FCF0006ABB0 /* Theme.swift in Sources */,
-				57C494A11C2536590087A4E9 /* PlayerInfo.swift in Sources */,
 				579E3ED319238B12006B24B2 /* DLMenuScene.m in Sources */,
 				57932023192DDDBE000BEBB8 /* DLGameKitHelper.m in Sources */,
 				57FE4E0E1920C8F5007A7317 /* main.m in Sources */,
