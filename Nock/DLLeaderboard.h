@@ -1,10 +1,3 @@
-//
-//  DLLeaderBoard.h
-//  Nock
-//
-//  Created by Jannie Theron on 2014/06/17.
-//  Copyright (c) 2014 pantsula. All rights reserved.
-//
 
 @import SpriteKit;
 
