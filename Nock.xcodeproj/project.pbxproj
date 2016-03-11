@@ -48,6 +48,8 @@
 		578240EC1930817E0065DB8B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 578240E71930817E0065DB8B /* MessageUI.framework */; };
 		578240EE1930817E0065DB8B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 578240E91930817E0065DB8B /* SystemConfiguration.framework */; };
 		5782CF2E193A9793000FA3DE /* timeBonusEmitter.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5782CF2D193A9793000FA3DE /* timeBonusEmitter.sks */; };
+		5787302E1C92B1530095629E /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5787302D1C92B1530095629E /* Menu.swift */; };
+		578730331C92B18B0095629E /* TestMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578730321C92B18B0095629E /* TestMenu.swift */; };
 		57932020192DDDBE000BEBB8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 57932016192DDDBE000BEBB8 /* AppDelegate.m */; };
 		57932021192DDDBE000BEBB8 /* ballTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 57932017192DDDBE000BEBB8 /* ballTrail.sks */; };
 		57932022192DDDBE000BEBB8 /* crash.sks in Resources */ = {isa = PBXBuildFile; fileRef = 57932018192DDDBE000BEBB8 /* crash.sks */; };
@@ -155,6 +157,9 @@
 		578240E71930817E0065DB8B /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		578240E91930817E0065DB8B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5782CF2D193A9793000FA3DE /* timeBonusEmitter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = timeBonusEmitter.sks; sourceTree = "<group>"; };
+		5787302D1C92B1530095629E /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		578730311C92B18B0095629E /* NockTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NockTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		578730321C92B18B0095629E /* TestMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMenu.swift; sourceTree = "<group>"; };
 		57932015192DDDBE000BEBB8 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Nock/AppDelegate.h; sourceTree = "<group>"; };
 		57932016192DDDBE000BEBB8 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Nock/AppDelegate.m; sourceTree = "<group>"; };
 		57932017192DDDBE000BEBB8 /* ballTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = ballTrail.sks; path = Nock/ballTrail.sks; sourceTree = "<group>"; };
@@ -265,6 +270,7 @@
 		57347197194704D400F25747 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				5787302C1C92B1260095629E /* Scenes */,
 				5793202B192DDE0A000BEBB8 /* ViewController.h */,
 				5793202C192DDE0A000BEBB8 /* ViewController.m */,
 				57FE4E131920C8F5007A7317 /* Main_iPhone.storyboard */,
@@ -341,6 +347,14 @@
 				578240DD193080BF0065DB8B /* README.txt */,
 			);
 			name = AdMob;
+			sourceTree = "<group>";
+		};
+		5787302C1C92B1260095629E /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				5787302D1C92B1530095629E /* Menu.swift */,
+			);
+			name = Scenes;
 			sourceTree = "<group>";
 		};
 		57F40A9619376FC2007D3419 /* Sounds */ = {
@@ -430,6 +444,8 @@
 			children = (
 				57FE4E341920C8F6007A7317 /* NockTests.m */,
 				57FE4E2F1920C8F6007A7317 /* Supporting Files */,
+				578730321C92B18B0095629E /* TestMenu.swift */,
+				578730311C92B18B0095629E /* NockTests-Bridging-Header.h */,
 			);
 			path = NockTests;
 			sourceTree = "<group>";
@@ -505,6 +521,7 @@
 		57FE4DF41920C8F5007A7317 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = pantsula;
 				TargetAttributes = {
@@ -618,6 +635,7 @@
 			files = (
 				5793202D192DDE0A000BEBB8 /* ViewController.m in Sources */,
 				572C889E1935F8A2000760CF /* DLInfo.m in Sources */,
+				5787302E1C92B1530095629E /* Menu.swift in Sources */,
 				57932024192DDDBE000BEBB8 /* DLGameScene.m in Sources */,
 				5725754C1950C0AF00006D39 /* DLLeaderboard.m in Sources */,
 				57932020192DDDBE000BEBB8 /* AppDelegate.m in Sources */,
@@ -636,6 +654,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				578730331C92B18B0095629E /* TestMenu.swift in Sources */,
 				57FE4E351920C8F6007A7317 /* NockTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -802,6 +821,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Nock.app/Nock";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -814,8 +834,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "NockTests/NockTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "co.za.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "NockTests/NockTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -825,6 +848,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Nock.app/Nock";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -833,8 +857,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nock/Nock-Prefix.pch";
 				INFOPLIST_FILE = "NockTests/NockTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "co.za.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "NockTests/NockTests-Bridging-Header.h";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
