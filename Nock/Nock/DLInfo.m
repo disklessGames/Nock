@@ -16,7 +16,7 @@
 -(instancetype)init{
     if (self = [super init]){
         
-        _gameState = [GameState sharedGameState];
+        _gameState = [GameState shared];
         
         int fontsize = 25;
         

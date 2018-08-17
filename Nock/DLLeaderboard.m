@@ -1,6 +1,6 @@
 
 #import <Foundation/Foundation.h>
-#import "DLLeaderBoard.h"
+#import "DLLeaderboard.h"
 #import "Nock-Swift.h"
 
 @implementation DLLeaderboard{
@@ -9,7 +9,7 @@
 
 -(instancetype)initWithSize:(CGSize)leaderboardSize atPosition:(CGPoint)centerPosition{
     if (self = [super init]){
-        _gameState = [GameState sharedGameState];
+        _gameState = [GameState shared];
         SKSpriteNode *background = [SKSpriteNode spriteNodeWithColor:[SKColor grayColor] size:leaderboardSize];
         background.alpha = 0.6;
         background.zPosition = 100;

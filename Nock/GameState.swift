@@ -3,61 +3,65 @@ import Foundation
 
 class GameState: NSObject {
     
-    static let sharedGameState = GameState()
+    @objc static let shared = GameState()
     
-    var totalTime = 10
-    var player: PlayerInfo?
-    var playerScore = 0
-    var isCountdown = true
-    var isGameOver = false
-    let currentTarget = 0
-    var friends = [String: PlayerInfo]()
+    @objc var totalTime = 10
+    @objc var player: PlayerInfo?
+    @objc var playerScore = 0
+    @objc var isCountdown = true
+    @objc var isGameOver = false
+    @objc let currentTarget = 0
+    @objc var friends = [String: PlayerInfo]()
     let themes: [String]
-    var currentTheme: Theme
+    @objc var currentTheme: Theme
     var currentThemeIndex = 0
     
-    private let defaults = NSUserDefaults.standardUserDefaults()
+    private let defaults = UserDefaults.standard
     private let settings: [String: AnyObject]
     
     
     override init() {
-        let plistPath = NSBundle.mainBundle().pathForResource("NockSettings", ofType: "plist")!
+        let plistPath = Bundle.main.path(forResource: "NockSettings", ofType: "plist")!
         self.settings = NSDictionary(contentsOfFile: plistPath) as! [String : AnyObject]
         self.themes = self.settings["themes"]! as! [String]
-        self.currentThemeIndex = defaults.integerForKey("selectedTheme")
+        self.currentThemeIndex = defaults.integer(forKey: "selectedTheme")
         let themeSettings = self.settings[self.themes[self.currentThemeIndex]] as! [String: String]
         self.currentTheme = Theme(themeInfo: themeSettings)
         super.init()
     }
     
-    func resetGame() {
+    @objc func resetGame() {
         totalTime = 10
         playerScore = 0
         isCountdown = true
         isGameOver = false
     }
     
-    func nextTarget() -> PlayerInfo? {
-        return friends.sort { $0.1.highScore > $1.1.highScore }.filter { $0.1.highScore > playerScore }.first?.1
+    @objc func nextTarget() -> PlayerInfo? {
+        return friends.sorted { $0.1.highScore > $1.1.highScore }
+            .filter { $0.1.highScore > playerScore }
+            .first?.1
     }
     
-    func previousTarget() -> PlayerInfo? {
-        return friends.sort { $0.1.highScore > $1.1.highScore }.filter { $0.1.highScore < playerScore }.first?.1
+    @objc func previousTarget() -> PlayerInfo? {
+        return friends.sorted { $0.1.highScore > $1.1.highScore }
+            .filter { $0.1.highScore < playerScore }
+            .first?.1
     }
     
-    func persist() {
+    @objc func persist() {
         if let player = player {
-            defaults.setInteger(player.highScore, forKey: "highScore")
-            defaults.setInteger(player.totalScore, forKey: "totalScore")
+            defaults.set(player.highScore, forKey: "highScore")
+            defaults.set(player.totalScore, forKey: "totalScore")
         }
     }
     
-    func loadNextTheme() {
+    @objc func loadNextTheme() {
         currentThemeIndex += 1
         if currentThemeIndex >= themes.count {
             currentThemeIndex = 0
         }
-        defaults.setInteger(currentThemeIndex, forKey: "selectedTheme")
+        defaults.set(currentThemeIndex, forKey: "selectedTheme")
         let themeSettings = self.settings[self.themes[self.currentThemeIndex]] as! [String: String]
         currentTheme = Theme(themeInfo: themeSettings)
     }

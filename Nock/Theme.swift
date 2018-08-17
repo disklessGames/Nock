@@ -3,17 +3,17 @@ import UIKit
 
 
 class Theme: NSObject {
-    let name: String
-    let font: String
-    let fontColor: UIColor
-    let playerSprite: String
-    let playerTrail: String
-    let ballSprite: String
-    let ballTrail: String
-    let background: String
-    let ballHitSound: String
-    let slideSound: String
-    let gameOverSound: String
+    @objc let name: String
+    @objc let font: String
+    @objc let fontColor: UIColor
+    @objc let playerSprite: String
+    @objc let playerTrail: String
+    @objc let ballSprite: String
+    @objc let ballTrail: String
+    @objc let background: String
+    @objc let ballHitSound: String
+    @objc let slideSound: String
+    @objc let gameOverSound: String
     
     init(themeInfo: [String: String]){
         self.name = themeInfo["name"]!

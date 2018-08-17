@@ -46,16 +46,16 @@ enum {
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
-        _gameState = [GameState sharedGameState];
+        _gameState = [GameState shared];
         _gameKitHelper = [DLGameKitHelper sharedGameKitHelper];
         _poweredUp = NO;
         _timeBonus = 0;
         
         [self loadSettings];
         [self setupPhysics];
-        [self setUpField];
+        [self setUpField: size];
         [self setUpPlayer];
-        [self setUpOpponents];
+        [self setUpBall];
         [self setupHUD];
         
         SKAction *zoom = [SKAction scaleTo:1.2 duration:0.2];
@@ -79,9 +79,7 @@ enum {
             [self cleanUpChildrenAndRemove:self];
             [self.view presentScene:menu transition:[SKTransition fadeWithDuration:.5]];
         }
-        //    [_scoreLabel removeAllActions];
-        
-    }else{
+     }else{
         
         if (_player.touched){
         }
@@ -146,12 +144,6 @@ enum {
             
             _scoreLabel.text = [NSString stringWithFormat: @"%ld",(long)_gameState.playerScore ];
             
-            //_player.touched = NO;
-            if (_gameState.playerScore > _gameState.currentTarget){
-                
-                [self updateHUD];
-            }
-            
             SKEmitterNode *collision = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"crash" ofType:@"sks"]];
             
             collision.position = contact.contactPoint;
@@ -186,7 +178,8 @@ enum {
     
     self.playerPullForceScale = [(NSNumber *)_settingsDictionary[@"playerPullForceScale"] integerValue];
     self.playerFlickForceScale = [(NSNumber *)_settingsDictionary[@"playerFlickForceScale"] integerValue];
-    if (!IPAD){
+    if (IPAD){
+    } else {
         [self scaleForcesForiPhone];
     }
 }
@@ -202,14 +195,13 @@ enum {
     _player.trail.particleZPosition = 40;
 }
 
--(void)setUpField
-{
-    //create walls
+-(void)setUpField:(CGSize) size {
     _field = [SKNode node];
     _field.zPosition = 10;
     
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:_gameState.currentTheme.background];
     sprite.position = CGPointMake(self.size.width/2, self.size.height/2);
+    sprite.size = size;
     [_field addChild:sprite];
     
     
@@ -236,7 +228,6 @@ enum {
 
 -(void)setUpPlayer
 {
-    //create player
     _player = [DLPuck node];
     
     if (IPAD) {
@@ -249,13 +240,13 @@ enum {
     [self addChild:_player];
     
     _player.zPosition = 50;
+
     _player.trail = [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSBundle mainBundle] pathForResource:@"trail" ofType:@"sks"]];
-    //set particle image
     _player.trail.particleTexture = [SKTexture textureWithImageNamed:_gameState.currentTheme.playerTrail];
+
     _player.sprite = [SKSpriteNode spriteNodeWithImageNamed:_gameState.currentTheme.playerSprite];
     _player.sprite.name = @"player";
-    
-    
+
     _player.physicsBody.linearDamping = 1;
     _player.physicsBody.categoryBitMask = CollisionPlayer;
     _player.physicsBody.contactTestBitMask = CollisionBall;
@@ -263,9 +254,8 @@ enum {
     
 }
 
--(void)setUpOpponents
+-(void)setUpBall
 {
-    //create balls
     _ball = [DLPuck node];
     if (IPAD) {
         _ball = [_ball initWithRadius:[(NSNumber *)_settingsDictionary[@"ballSizeIPad"] integerValue] settings:self.settingsDictionary];
@@ -285,13 +275,9 @@ enum {
     
 }
 
-
-////////////////////////////////////    H U D    ////////////////////////////////////
-
 -(void)setupHUD{
     _hud = [SKNode node];
-    
-    
+
     SKNode *targetScore = [SKNode node];
     
     SKSpriteNode *targetPlayerSprite;
@@ -357,10 +343,8 @@ enum {
     _timeBonusEmitter.particleZPosition = 45;
     
     
-    //[_hud addChild:_scoreBar];
-    if (!IPAD) {
-        //adjust for portrait iPhone
-        
+    if (IPAD) {
+    } else {
         targetPlayerSprite.size = CGSizeMake(40.0, 40.0);
         targetPlayerSprite.position = CGPointMake(self.size.width-30.0, self.size.height-30.0);
         
@@ -397,11 +381,6 @@ enum {
     
 }
 
--(void)updateHUD{
-    
-}
-
-////////////////////////////////////    GAME OVER    ////////////////////////////////////
 -(void)doGameOver{
     
     [self removeActiveGameLabels];
@@ -411,6 +390,7 @@ enum {
     }
     _gameState.player.totalScore += _gameState.playerScore;
     [_gameState persist];
+    
     SKAction *crash = [SKAction playSoundFileNamed:_gameState.currentTheme.gameOverSound waitForCompletion:YES];
     [_field runAction:crash];
     [_gameKitHelper persistScoreswithCompletionHandler:^(id ibject) {
@@ -443,21 +423,22 @@ enum {
     done.name = @"Done";
     
     
-    if (!IPAD){
+    if (IPAD) {
+    } else {
         scoreLine.fontSize = 34;
     }
-    
-    SKAction *shrink = [SKAction scaleTo:0 duration:0.1];
+
     SKAction *zoom = [SKAction scaleTo:1 duration:2];
-    SKAction *drop = [SKAction moveTo:CGPointMake(self.size.width/2,self.size.height/2) duration:1];
-    SKAction *group = [SKAction group:@[zoom,[drop reversedAction]]];
-    SKAction *sequence = [SKAction sequence:@[shrink,group]];
+    SKAction *drop = [SKAction moveTo:CGPointMake(self.size.width/2,self.size.height/2) duration: 1];
+    SKAction *group = [SKAction group: @[zoom,[drop reversedAction]]];
     [_field addChild:scoreLine];
-    [done runAction:sequence];
+    done.xScale = 0;
+    done.yScale = 0;
+    [done runAction:group];
     [_field addChild:done];
     
-    _player.physicsBody.linearDamping=0;
-    _ball.physicsBody.linearDamping=0;
+    _player.physicsBody.linearDamping = 0;
+    _ball.physicsBody.linearDamping = 0;
 }
 
 - (void)removeActiveGameLabels {
@@ -475,6 +456,5 @@ enum {
     }
     [node removeFromParent];
 }
-
 
 @end

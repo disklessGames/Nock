@@ -98,7 +98,7 @@
 
 -(void)finalFlick {
     [self.physicsBody applyImpulse:CGVectorMake((self.endLocation.x - self.position.x) * _playerFlickForceScale, (self.endLocation.y - self.position.y )*_playerFlickForceScale)] ;
-    [self runAction:[SKAction playSoundFileNamed:[GameState sharedGameState ].currentTheme.slideSound waitForCompletion:YES]];
+    [self runAction:[SKAction playSoundFileNamed:[GameState shared ].currentTheme.slideSound waitForCompletion:YES]];
 }
 @end
 

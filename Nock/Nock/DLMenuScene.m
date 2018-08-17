@@ -25,10 +25,10 @@
 
 -(instancetype)initWithSize:(CGSize)size{
     if (self = [super initWithSize:size]) {
-        _gameState = [GameState sharedGameState];
+        _gameState = [GameState shared];
         
         [self setupSelectionHighlight];
-        [self setupBackground];
+        [self setupBackground: size];
         [self setupTitleButton];
         [self setupTitleZoomLoop];
         [self setupScoresButton];
@@ -97,7 +97,8 @@
 }
 
 - (void)adaptForiPhone {
-    if (!IPAD){
+    if (IPAD) {
+    } else {
         _titleButton.fontSize = 90;
         _scoresButton.fontSize = 25;
         _scoresButton.text = [NSString stringWithFormat: @"Last - %ld Best - %ld",(long)_gameState.playerScore,(long)_gameState.player.highScore];
@@ -106,9 +107,10 @@
     }
 }
 
-- (void)setupBackground {
+- (void)setupBackground:(CGSize) size {
     _backGround = [SKSpriteNode spriteNodeWithImageNamed:_gameState.currentTheme.background];
     _backGround.position = CGPointMake(self.size.width/2, self.size.height/2);
+    _backGround.size = size;
     _backGround.zPosition = 5;
     [self addChild:_backGround];
     [self selectNode:_backGround];
@@ -170,7 +172,7 @@
             [_gameState loadNextTheme];
             [self applyTheme];
         }else if ([node.name isEqualToString: @"startButton"] ){
-            [[GameState sharedGameState] resetGame];
+            [[GameState shared] resetGame];
             DLGameScene *game = [[DLGameScene alloc]initWithSize:self.size];
             [self.view presentScene:game transition:[SKTransition fadeWithDuration:.5]];
         }
