@@ -509,7 +509,7 @@
 				ORGANIZATIONNAME = pantsula;
 				TargetAttributes = {
 					57FE4DFB1920C8F5007A7317 = {
-						DevelopmentTeam = CG6B72D3X4;
+						DevelopmentTeam = 56XX9JASG7;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 1;
@@ -788,6 +788,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 56XX9JASG7;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nock/Nock-Prefix.pch";
 				INFOPLIST_FILE = "Nock/Nock-Info.plist";
@@ -812,6 +813,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 56XX9JASG7;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nock/Nock-Prefix.pch";
 				INFOPLIST_FILE = "Nock/Nock-Info.plist";
